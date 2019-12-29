@@ -1,0 +1,36 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.7.3
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Install poety
+          command: |
+            # curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+            curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | POETRY_PREVIEW=1 python
+            source $HOME/.poetry/env
+      - run:
+          name: Install dependencies with poety
+          command: |
+            source $HOME/.poetry/env
+            poetry config virtualenvs.in-project true
+            # poetry config virtualenvs.create false - not working permission error
+            # export POETRY_VIRTUALENVS_CREATE=false
+            poetry install --no-dev
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            . .venv/bin/activate
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > .venv/bin/cc-test-reporter
+            chmod +x .venv/bin/cc-test-reporter
+      - run:
+          name: Run tests
+          command: |
+            . .venv/bin/activate
+            cc-test-reporter before-build
+            pytest --junitxml=coverage.xml
+            coverage xml
+            cc-test-reporter after-build --coverage-input-type coverage.py --exit-code $?
