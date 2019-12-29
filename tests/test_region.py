@@ -11,7 +11,6 @@ def test_region_returns_df():
 def test_region_is_added_df():
     df = region.impute_region("tests/test_data.csv")
     regions = list(set(df["region"].values.tolist()))
-    print(regions)
     # Remove the empty strings
     regions = list(filter(None, regions))
     assert len(regions) > 0

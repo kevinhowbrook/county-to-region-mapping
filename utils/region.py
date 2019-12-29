@@ -1,6 +1,7 @@
 """Given a csv, adds region data and returns a dataframe"""
 
 import pandas as pd
+import numpy as np
 
 from utils.mapping import county_to_region, geography
 
@@ -8,7 +9,10 @@ from utils.mapping import county_to_region, geography
 def impute_region(csv):
     df = pd.read_csv(csv)
     # drop rows that don't have Met and Shire values, because these are summary roes and all we need.
-    df = df[df['region'] >= 25]
+    print(df)
+    df['Met and Shire Counties'].replace('', np.nan, inplace=True)
+    df.dropna(subset=['Met and Shire Counties'], inplace=True)
+    print(df)
     # TODO, turn this into a sanity check before running so different data files can be used
     # First get a list of all the counties in the data and check they exist in the mapping function
     counties = df["Met and Shire Counties"].values.tolist()
