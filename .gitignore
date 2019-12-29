@@ -2,4 +2,5 @@
 data/**
 .vscode
 .coverage
-*.csv*
+*.csv#
+output

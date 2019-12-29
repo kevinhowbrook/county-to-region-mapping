@@ -6,10 +6,9 @@ from utils.mapping import county_to_region, geography
 
 
 def impute_region(csv):
-    df = pd.read_csv("data/county_to_region_housing_stock.xlsx-LT116.csv")
-    # First few rows aren't needed so set the columns accordingly
-    df = df.rename(columns=df.iloc[2])
-
+    df = pd.read_csv(csv)
+    # drop rows that don't have Met and Shire values, because these are summary roes and all we need.
+    df = df[df['region'] >= 25]
     # TODO, turn this into a sanity check before running so different data files can be used
     # First get a list of all the counties in the data and check they exist in the mapping function
     counties = df["Met and Shire Counties"].values.tolist()
@@ -32,11 +31,10 @@ def impute_region(csv):
         # Check this rows county and get it's region and populate the region var
         region = False
         try:
-            if row[3][0] == "E" and type(row[4]) is str:
-                region = county_to_region(row[4])
+            if row[4][0] == "E" and type(row[5]) is str:
+                region = county_to_region(row[5])
                 df.at[i, "region"] = region
         except TypeError:
             continue
-
     # Now itterate the rows again and assign a region for the relevant missing rows
     return df

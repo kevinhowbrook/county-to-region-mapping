@@ -30,12 +30,10 @@ Following county > regions were assumptions
  - Met and Shire Counties
  - Cornwall and Isles of Scilly
 
-No idea what Met and Shire Counties is
-
 ## TODOs
 - Make data frame similar to one in the data
  - Check spelling of county names in dataframe match utils.mapping
 - Create method in utils for creating new variable for ssr from county
 - Create test for new method to ammend/create new data variable.
 - Merge data set on year and region variable
-
+- tests should use a mock csv
