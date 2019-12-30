@@ -7,7 +7,7 @@ from utils import region
 and make a list of dataframes to merge """
 data_frames = []
 
-for i,f in enumerate(glob.glob("data/*.csv")):
+for i, f in enumerate(glob.glob("data/*.csv")):
     data_frames.append(region.impute_region(f))
 
 new_df = []
@@ -17,5 +17,5 @@ for d in data_frames:
 
 out = pd.DataFrame(new_df)
 """ Merge all the new data to one data set on Year and Region """
-#new_df = pd.merge(data_frames[0], data_frames[1],  how='left', left_on=['region'], right_on = ['region'])
-out.to_csv('output/out.csv')
+# new_df = pd.merge(data_frames[0], data_frames[1],  how='left', left_on=['region'], right_on = ['region'])
+out.to_csv("output/out.csv")

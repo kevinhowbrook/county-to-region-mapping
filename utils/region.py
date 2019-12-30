@@ -3,7 +3,7 @@
 import pandas as pd
 import numpy as np
 
-from utils.mapping import county_to_region, geography
+from utils.lookups import county_to_region, geography, local_auth_code_to_county
 
 
 def impute_region(csv):
@@ -28,16 +28,14 @@ def impute_region(csv):
     df["region"] = ""
     for i, row in enumerate(df.itertuples()):  # enumeration means the row begins 0
         # Check this rows county and get it's region and populate the region var
+        # Area code
         region = False
-        try:
-            if row[3][0] == "E" and type(row[4]) is str:
-                region = county_to_region(row[4])
-                df.at[i, "region"] = region
-        except TypeError:
-            continue
-
-    # drop rows that don't have Met and Shire values, because these are summary roes and all we need.
-    df['Met and Shire Counties'].replace('', np.nan, inplace=True)
-    df.dropna(subset=['Met and Shire Counties'], inplace=True)
+        geo_data = local_auth_code_to_county(df.at[i, "Area code"])
+        if geo_data:
+            if geo_data["region_name"]:
+                df.at[i, "region"] = geo_data["region_name"]
+            else:
+                # if we couldn't work out a region, add 0 for region
+                df.at[i, "region"] = 0
 
     return df
