@@ -31,9 +31,14 @@ Following county > regions were assumptions
  - Cornwall and Isles of Scilly
 
 ## TODOs
-- Make data frame similar to one in the data
- - Check spelling of county names in dataframe match utils.mapping
+#### Create lookup function from area code to region
+Use this for mapping https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/LAD15_CTY15_EN_LU/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json.
+We need to be able to query a LA code, eg E1100001 and return a region.
+This will be LACODE > country > region.
+For the county lookup we may need to use utils.mapping
+
+
+#### Others
 - Create method in utils for creating new variable for ssr from county
-- Create test for new method to ammend/create new data variable.
-- Merge data set on year and region variable
+- Merge data set on year and region variable and sum values
 - tests should use a mock csv
