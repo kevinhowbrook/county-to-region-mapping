@@ -25,7 +25,7 @@ def test_all_lacodes_return_regions():
         code = i["attributes"]["LAD15CD"]
         geo_data = lookups.local_auth_code_to_county(code)
         if geo_data["region_name"] is False:
-            print(f'Cannot find a region value for {geo_data["county_name"]}')
+            # print(f'Cannot find a region value for {geo_data["county_name"]}')
             assert False
         else:
             assert True
