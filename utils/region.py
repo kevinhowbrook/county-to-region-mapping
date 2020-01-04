@@ -29,7 +29,6 @@ def impute_region(csv):
     for i, row in enumerate(df.itertuples()):  # enumeration means the row begins 0
         # Check this rows county and get it's region and populate the region var
         geo_data = local_auth_code_to_county(df.at[i, "Area code"])
-        print(geo_data)
         if geo_data:
             if geo_data["region_name"]:
                 df.at[i, "region"] = geo_data["region_name"]
