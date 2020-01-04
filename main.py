@@ -38,9 +38,14 @@ year_range = [str(i) for i in list(range(1994,2019))]
 for i in year_range:
     out[i] = out[i].replace(['..'], '0')
 
-#out = out.set_index('region').groupby(['region'])[year_range].sum()
+# Group by region and preserve the variable so we can use it for reshaping
 out = out.groupby(['region'], as_index=False)[year_range].sum()
 
-out.to_csv("output/out.csv")
+# Re-shape
+out = out.melt("region", var_name="Year", value_name="Housing Stock")
+out = out.sort_values(by=['region', 'Year'])
+out = out.reset_index(drop=True)
+out.to_csv("output/out_shaped.csv")
+#out.to_csv("output/out.csv")
 
 
