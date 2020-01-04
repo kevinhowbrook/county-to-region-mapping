@@ -3,7 +3,7 @@
 import pandas as pd
 import numpy as np
 
-from utils.lookups import county_to_region, geography, local_auth_code_to_county
+from utils.lookups import geography, local_auth_code_to_county
 
 
 def impute_region(csv):
@@ -29,7 +29,10 @@ def impute_region(csv):
     for i, row in enumerate(df.itertuples()):  # enumeration means the row begins 0
         # Check this rows county and get it's region and populate the region var
         geo_data = local_auth_code_to_county(df.at[i, "Area code"])
+        print(geo_data)
         if geo_data:
             if geo_data["region_name"]:
                 df.at[i, "region"] = geo_data["region_name"]
+        else:
+            df.at[i, "region"] = '0'
     return df

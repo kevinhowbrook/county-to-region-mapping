@@ -13,9 +13,13 @@ for i, f in enumerate(glob.glob("data/*.csv")):
 new_df = []
 for d in data_frames:
     for i, row in enumerate(d.itertuples()):  # enumeration means the row begins 0
+        print(row)
         new_df.append(row)
 
 out = pd.DataFrame(new_df)
+
 """ Merge all the new data to one data set on Year and Region """
 # new_df = pd.merge(data_frames[0], data_frames[1],  how='left', left_on=['region'], right_on = ['region'])
 out.to_csv("output/out.csv")
+
+
