@@ -35,7 +35,8 @@ Following county > regions were assumptions
 Use this for mapping https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/LAD15_CTY15_EN_LU/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json.
 We need to be able to query a LA code, eg E1100001 and return a region.
 This will be LACODE > country > region.
-For the county lookup we may need to use utils.mapping
+- Issue with this mapping - codes are/arent consistent so searching by the name string might be needed
+not found, bedford, northumbaland, wiltshire, ilse of scilly, cornwall, Cheshire West and Chester, Shropshire, cheshire east, County Durham
 
 
 #### Others
