@@ -32,7 +32,7 @@ for place in places:
     {'Male 15 > 19': '', 'Male 20 > 24': '', 'Male 25 > 29': '', 'Male 30 > 34': '', 'Male 35 > 39': '', 'Male 40 > 44': '', 'Male 45 > 49': '', 'Male 50 > 54': '', 'Male 55 > 59': '', 'Male 60 > 64': '', 'Male 65 > 69': '', 'Male 70 > 74': '', 'Male 75 > 79': '', 'Male 80 > 84': '', 'Male 85 > 89': '', 'Male 90 > 90': '', 'Female 15 > 19': '', 'Female 20 > 24': '', 'Female 25 > 29': '', 'Female 30 > 34': '', 'Female 35 > 39': '', 'Female 40 > 44': '', 'Female 45 > 49': '', 'Female 50 > 54': '', 'Female 55 > 59': '', 'Female 60 > 64': '', 'Female 65 > 69': '', 'Female 70 > 74': '', 'Female 75 > 79': '', 'Female 80 > 84': '', 'Female 85 > 89': '', 'Female 90 > 90': '', 'Local Auth Disctrict': 'Warrington', 'Year': '2017'}
     """
     for i in year_ranges:
-        a_row = {            }
+        a_row = {}
         for a in age_ranges:
             a_row.update({
                 f"Male {a[0]} > {a[-1]}": ''
@@ -42,7 +42,7 @@ for place in places:
                 f"Female {a[0]} > {a[-1]}": ''
             })
         a_row.update({
-            "Local Auth Disctrict": place,
+            "Local_Auth_Disctrict": place,
             "Year": i
         })
         range_data = range_data.append(a_row, ignore_index=True)
@@ -52,43 +52,43 @@ for place in places:
     temp_data = df.loc[df['Local Auth District'] == place]
     # Now we have a temp data frame of 1 area.
     # Sum year data and by year ranges, male then female
-    print(range_data)
-    exit()
     # 1 = male, 2 = female
-    # for age in age_ranges:
-    #     #print(temp_data.loc[temp_data['age'].isin(year) &&])
-    #     dt = temp_data.loc[
-    #         (temp_data["age"].isin(age))
-    #         & (temp_data["sex"] == 1)
-    #     ]
-    #     new_var_name = f"Male {age[0]} > {age[-1]}"  # e,g male 15 > 19
-    #     for i in year_ranges:
-    #         # Make rows of data here
-    #         vals = list(set(dt[f"population_{i}"].tolist()))
-    #         # new_data.update({new_var_name:sum(vals)})
-    #         print(new_var_name)
-    #         a_row.append({
-    #             new_var_name:sum(vals),
-    #         })
-    #         import time
-    #         time.sleep(1)
-    #         print(a_row)
-    #         # var_list.append([new_var_name, sum(vals)])
+    for age in age_ranges:
+        dt = temp_data.loc[
+            (temp_data["age"].isin(age))
+            & (temp_data["sex"] == 1)
+        ]
+        var_name = f"Male {age[0]} > {age[-1]}"  # e,g male 15 > 19
+        for i in year_ranges:
+            # now dt is a dataframe of eg 16 > 19., Darlington, male
+            # Sum up the population_year values and add them to range_data
+            vals = sum(list(set(dt[f"population_{i}"].tolist())))
+            # Vals is now equal to age range at year at place, so add it :/
+            # find in the ranged data frame where this needs to be added
+            range_data.loc[
+                (range_data.Year == i) &
+                (range_data.Local_Auth_Disctrict == place),
+                var_name] = vals
+    # dupe for ladies
+    for age in age_ranges:
+        dt = temp_data.loc[
+            (temp_data["age"].isin(age))
+            & (temp_data["sex"] == 2)
+        ]
+        var_name = f"Female {age[0]} > {age[-1]}"  # e,g male 15 > 19
+        for i in year_ranges:
+            # now dt is a dataframe of eg 16 > 19., Darlington, male
+            # Sum up the population_year values and add them to range_data
+            vals = sum(list(set(dt[f"population_{i}"].tolist())))
+            # Vals is now equal to age range at year at place, so add it :/
+            # find in the ranged data frame where this needs to be added
+            range_data.loc[
+                (range_data.Year == i) &
+                (range_data.Local_Auth_Disctrict == place),
+                var_name] = vals
 
-    #         #range_data = range_data.append(new_data, ignore_index=True)
-    # range_data = range_data.append(a_row, ignore_index=True)
 
-    # print(range_data)
-print(range_data)
 range_data.to_csv("output/population_out_ranges_added.csv")
-exit()
-for i, row in enumerate(df.itertuples()):  # enumeration means the row begins 0
-    age = row[4]
-    sex = row[3]
-
-exit()
-
-df.to_csv("output/population_out_ranges_added.csv")
 exit()
 """
 Run the region logic to populate the region value
