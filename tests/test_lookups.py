@@ -1,6 +1,8 @@
-from utils import lookups
 import json
+
 import pandas as pd
+
+from utils import lookups
 
 
 def test_county_to_region():
@@ -36,7 +38,6 @@ def test_all_strings_in_test_population_age_data_return_regions():
     for i in places:
         geo_data = lookups.local_string_to_region(i)
         if geo_data and geo_data["region_name"] != "":
-            print(geo_data)
             pass
         else:
             # print(f"Cannot find a region value for {i}")

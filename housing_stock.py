@@ -1,7 +1,4 @@
-import glob
-import pandas as pd
 from utils import region
-
 
 """ Loop over all the data files and populate region data
 and make a list of dataframes to merge """
@@ -27,7 +24,10 @@ Run the region logic to populate the region value
 Use 'Edited' CSV files to remove large England summary values and unwanted columns.
 See the test data for the right format, we are only using london borough, shir and met data.
 """
-out = region.impute_region("data/edited/county_to_region_housing_stock_edited.csv")
+out = region.impute_region(
+    "data/edited/county_to_region_housing_stock_edited.csv",
+    "Lower and Single Tier Authority Data",
+)
 # out = region.impute_region('tests/test_data.csv')
 """ Sanitize """
 # Get rid of anything without a region
@@ -45,5 +45,4 @@ out = out.groupby(["region"], as_index=False)[year_range].sum()
 out = out.melt("region", var_name="Year", value_name="Housing Stock")
 out = out.sort_values(by=["region", "Year"])
 out = out.reset_index(drop=True)
-out.to_csv("output/out_shaped.csv")
-out.to_csv("output/out.csv")
+out.to_csv("output/final_data_files/housing.csv")

@@ -3,3 +3,7 @@ test-local:
 
 run:
 	poetry run python main.py
+
+run-all:
+	poetry run python housing_stock.py
+	poetry run python population.py

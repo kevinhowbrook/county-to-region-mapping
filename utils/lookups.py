@@ -1,6 +1,5 @@
 import json
 
-
 geography = {
     "North": [
         "Cleaveland",
@@ -48,6 +47,7 @@ geography = {
         "Avon",
         "Cornwall",
         "Cornwall and Isles of Scilly",
+        "Cornwall and the Isles of Scilly",
         "Devon",
         "Dorset",
         "Gloucestershire",
@@ -116,10 +116,12 @@ jdata = json.loads(open("utils/lacodes.json").read())
 #             }
 
 
-def local_string_to_region(la_string):
+def local_string_to_region(la_string, map_counties=0):
     """LAcode to region
     Arguments:
         la_string: string -- the LA name eg, Bedford
+        map_counties: int -- if 1, then after failing to map the LA on LAD17NM
+            attempt to map it as a county: CTY17NM
     Returns:
         dict -- la_code, la_name, county_name, region_name
     """
@@ -132,11 +134,19 @@ def local_string_to_region(la_string):
                 region_name = county_to_region(county_name)
             else:
                 region_name = i["GOR10NM"]
-
+            # if not region_name and map_counties == 1:
             return {
                 "la_code": i["LAD17CD"],
                 "la_name": la_string,
                 "county_name": county_name,
+                "region_name": region_name,
+            }
+        if la_string == i["CTY17NM"] and map_counties == 1:
+            region_name = county_to_region(la_string)
+            return {
+                "la_code": i["LAD17CD"],
+                "la_name": la_string,
+                "county_name": i["CTY17NM"],
                 "region_name": region_name,
             }
 

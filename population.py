@@ -33,10 +33,9 @@ This is really f'ing confusing to read
 
 
 def part_one():
-    df = pd.read_csv("tests/test_population_data.csv")
+    df = pd.read_csv("data/edited/county_to_region_population_edited.csv")
     # Not interested in anything below 16
     df = df.drop(df[df.age < 16].index)
-    df = df.head(1000)
     places = list(set(df["Local Auth District"].tolist()))
     places.sort()
     age_ranges = list(chunks(list(range(15, 65)), 5))
@@ -46,7 +45,6 @@ def part_one():
 
     # Loops through each place (area code/LA)
     for place in places:
-        print(place)
         """Make a dictionary for adding the data to, then add it to the rande_data dataframe
         E,G:
         {'Male 15 > 19': '', 'Male 20 > 24': '', 'Male 25 > 29': '', 'Male 30 > 34': '', 'Male 35 > 39': '', 'Male 40 >
@@ -81,7 +79,8 @@ def part_one():
     range_data.to_csv("output/population_out_ranges_added.csv")
 
 
-# part_one()
+part_one()
+
 """
 Part 2
 Run the region logic to populate the region value
@@ -110,4 +109,4 @@ for i in year_range:
 # Group by region and year
 out = out.groupby(["region", "Year"], as_index=False)[year_range].sum()
 out.to_csv("output/population_out_grouped.csv")
-out.to_csv("output/population_out.csv")
+out.to_csv("output/final_data_files/population.csv")
