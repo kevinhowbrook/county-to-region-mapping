@@ -122,6 +122,9 @@ jdata = json.loads(open("utils/lacodes.json").read())
 
 
 def local_string_to_region(la_string, map_counties=0):
+
+    if la_string[-2:] == "UA":
+        la_string = la_string[:-2]
     """LAcode to region
     Arguments:
         la_string: string -- the LA name eg, Bedford
@@ -141,6 +144,9 @@ def local_string_to_region(la_string, map_counties=0):
             }
 
         if la_string == i["LAD17NM"]:
+            if la_string == "Alnwick":
+                print("yep")
+
             # If there is no county assigned, we can't look it up in our mapping
             # So use the region name in the data, it's about 52 places that do this
             county_name = i["CTY17NM"]
@@ -148,6 +154,11 @@ def local_string_to_region(la_string, map_counties=0):
                 region_name = county_to_region(county_name)
             else:
                 region_name = i["GOR10NM"]
+            if (
+                region_name == "Yorkshire & Humberside"
+                or region_name == "Yorkshire and The Humber"
+            ):
+                region_name = "Yorkshire & Humberside"
             return {
                 "la_code": i["LAD17CD"],
                 "la_name": la_string,
@@ -156,6 +167,11 @@ def local_string_to_region(la_string, map_counties=0):
             }
         if la_string == i["CTY17NM"] and map_counties == 1:
             region_name = county_to_region(la_string)
+            if (
+                region_name == "Yorkshire & Humberside"
+                or region_name == "Yorkshire and The Humber"
+            ):
+                region_name = "Yorkshire & Humberside"
             return {
                 "la_code": i["LAD17CD"],
                 "la_name": la_string,
@@ -164,4 +180,4 @@ def local_string_to_region(la_string, map_counties=0):
             }
 
 
-# print(local_string_to_region("Alnwick"))
+print(local_string_to_region("Alnwick", 0))
