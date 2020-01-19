@@ -1,5 +1,4 @@
 """Given a csv, adds region data and returns a dataframe"""
-
 import pandas as pd
 
 from utils.lookups import local_string_to_region

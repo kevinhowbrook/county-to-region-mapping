@@ -43,3 +43,7 @@ not found, bedford, northumbaland, wiltshire, ilse of scilly, cornwall, Cheshire
 - Create method in utils for creating new variable for ssr from county
 - Merge data set on year and region variable and sum values
 - tests should use a mock csv
+
+
+### Bugs
+- in marriages, some numbers are still with commas, this is causing data from 2001 > 2010 to be ignored in the goruping

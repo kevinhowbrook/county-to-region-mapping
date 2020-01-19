@@ -38,7 +38,12 @@ year_range = [str(i) for i in list(range(1994, 2019))]
 for i in year_range:
     out[i] = out[i].replace([".."], "0")
 
+mask = out.region == "East of England"
+column_name = "region"
+out.loc[mask, column_name] = "South East"
+
 # Group by region and preserve the variable so we can use it for reshaping
+
 out = out.groupby(["region"], as_index=False)[year_range].sum()
 
 # Re-shape

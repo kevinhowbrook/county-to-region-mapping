@@ -18,15 +18,32 @@ for i in year_range:
     out[i] = out[i].replace([".."], "0")
     out[i] = out[i].replace(["-"], "0")
 
+
 # Get rid of anything without a region
 out = out.drop(out[out.region == ""].index)
 out = out.drop(out[out.region == "0"].index)
 
 
+mask = out.region == "East of England"
+column_name = "region"
+out.loc[mask, column_name] = "South East"
+
 # Group by region and preserve the variable so we can use it for reshaping
 # out = out.groupby(["region"], as_index=False)[year_range].sum()
 # Group by region and preserve the variable so we can use it for reshaping
+year_range = [str(i) for i in list(range(2001, 2017))]
+
+# replace string values with floats... for some reason this is missed in the
+# read_csv method
+for i in year_range:
+    try:
+        out[i] = out[i].str.replace(",", "").astype(float)
+    except AttributeError:
+        print(i)
+        pass
+
 out = out.groupby(["region"], as_index=False)[year_range].sum()
+out.to_csv("output/tmp/marriage.csv")
 
 # Re-shape
 out = out.melt("region", var_name="Year", value_name="marriages")

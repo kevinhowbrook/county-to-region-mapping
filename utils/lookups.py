@@ -56,6 +56,7 @@ geography = {
     ],
     "East Anglia": ["Cambridgeshire", "Norfolk", "Suffolk"],
     "South East": [
+        "Bedford",
         "Bedfordshire",
         "Essex",
         "Hertfordshire",
@@ -75,6 +76,10 @@ geography = {
     "Unknown": ["Met and Shire Counties"],
 }
 
+# Shouldnt have south east or east of england
+# these should
+
+# East of england should be South East
 
 """
 Given a county input, return it's SSR (Standard Statistical Region)
@@ -126,6 +131,15 @@ def local_string_to_region(la_string, map_counties=0):
         dict -- la_code, la_name, county_name, region_name
     """
     for i in jdata:
+        # if la is peterborough return something foced
+        if la_string == "Peterborough":
+            return {
+                "la_code": i["LAD17CD"],
+                "la_name": la_string,
+                "county_name": "Cambridgeshire",
+                "region_name": "East Anglia",
+            }
+
         if la_string == i["LAD17NM"]:
             # If there is no county assigned, we can't look it up in our mapping
             # So use the region name in the data, it's about 52 places that do this
@@ -134,7 +148,6 @@ def local_string_to_region(la_string, map_counties=0):
                 region_name = county_to_region(county_name)
             else:
                 region_name = i["GOR10NM"]
-            # if not region_name and map_counties == 1:
             return {
                 "la_code": i["LAD17CD"],
                 "la_name": la_string,
