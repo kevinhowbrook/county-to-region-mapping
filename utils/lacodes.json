@@ -32270,6 +32270,20 @@
       "FID": 174
     },
     {
+        "WD17CD": "E05001527",
+        "WD17NM": "Billingham Central",
+        "WD17NMW": "",
+        "LAD17CD": "E06000004",
+        "LAD17NM": "Stockton-On-Tees",
+        "CTY17CD": "",
+        "CTY17NM": "",
+        "GOR10CD": "E12000001",
+        "GOR10NM": "North East",
+        "CTRY17CD": "E92000001",
+        "CTRY17NM": "England",
+        "FID": 174
+      },
+    {
       "WD17CD": "E05010470",
       "WD17NM": "Rushey Mead",
       "WD17NMW": "",

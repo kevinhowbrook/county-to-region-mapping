@@ -20,8 +20,8 @@ for i in year_range:
 
 
 # Get rid of anything without a region
-out = out.drop(out[out.region == ""].index)
-out = out.drop(out[out.region == "0"].index)
+# out = out.drop(out[out.region == ""].index)
+# out = out.drop(out[out.region == "0"].index)
 
 
 mask = out.region == "East of England"
@@ -41,6 +41,7 @@ for i in year_range:
     except AttributeError:
         print(i)
         pass
+out.to_csv("output/final_data_files/regions/marriage.csv")
 
 out = out.groupby(["region"], as_index=False)[year_range].sum()
 out.to_csv("output/tmp/marriage.csv")

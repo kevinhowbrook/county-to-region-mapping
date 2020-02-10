@@ -7,10 +7,10 @@ geography = {
         "Northumberland",
         "Tyne & Wear",
         "Tyne and Wear",
-        "Cumbria",
         "Tyne and Wear (Met County)",
     ],
     "North West": [
+        "Cumbria",
         "Cheshire",
         "Greater Manchester",
         "Lancashire",
@@ -123,7 +123,7 @@ jdata = json.loads(open("utils/lacodes.json").read())
 
 def local_string_to_region(la_string, map_counties=0):
 
-    if la_string[-2:] == "UA":
+    if la_string[-3:] == " UA":
         la_string = la_string[:-2]
     """LAcode to region
     Arguments:
@@ -142,11 +142,7 @@ def local_string_to_region(la_string, map_counties=0):
                 "county_name": "Cambridgeshire",
                 "region_name": "East Anglia",
             }
-
         if la_string == i["LAD17NM"]:
-            if la_string == "Alnwick":
-                print("yep")
-
             # If there is no county assigned, we can't look it up in our mapping
             # So use the region name in the data, it's about 52 places that do this
             county_name = i["CTY17NM"]
@@ -166,6 +162,7 @@ def local_string_to_region(la_string, map_counties=0):
                 "region_name": region_name,
             }
         if la_string == i["CTY17NM"] and map_counties == 1:
+            print("here")
             region_name = county_to_region(la_string)
             if (
                 region_name == "Yorkshire & Humberside"
@@ -178,6 +175,3 @@ def local_string_to_region(la_string, map_counties=0):
                 "county_name": i["CTY17NM"],
                 "region_name": region_name,
             }
-
-
-print(local_string_to_region("Alnwick", 0))

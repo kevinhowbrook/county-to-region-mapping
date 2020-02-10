@@ -30,13 +30,14 @@ column_name = "region"
 out.loc[mask, column_name] = "South East"
 
 out.to_csv("output/tmp/housing_multi_region_added.csv")
+out.to_csv("output/final_data_files/regions/housing_multi.csv")
 
 # TODO parse out UA
 
 
 """ Sanitize """
 # Get rid of anything without a region
-out = out.drop(out[out.region == "0"].index)
+# out = out.drop(out[out.region == "0"].index)
 # format null data and nan
 out["local_authority_stock"] = out["local_authority_stock"].replace([".."], "0")
 out["local_authority_stock"] = out["local_authority_stock"].replace(["--"], "0")

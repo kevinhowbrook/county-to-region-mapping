@@ -31,7 +31,7 @@ out = region.impute_region(
 # out = region.impute_region('tests/test_data.csv')
 """ Sanitize """
 # Get rid of anything without a region
-out = out.drop(out[out.region == "0"].index)
+# out = out.drop(out[out.region == "0"].index)
 
 # Some numerical values are -- so replace these
 year_range = [str(i) for i in list(range(1994, 2019))]
@@ -41,6 +41,7 @@ for i in year_range:
 mask = out.region == "East of England"
 column_name = "region"
 out.loc[mask, column_name] = "South East"
+out.to_csv("output/final_data_files/regions/housing_stock.csv")
 
 # Group by region and preserve the variable so we can use it for reshaping
 

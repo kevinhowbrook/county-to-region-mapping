@@ -93,11 +93,12 @@ out = region.impute_region(
 out.to_csv("output/population_out.csv")
 """ Sanitize """
 # Get rid of anything without a region
-out = out.drop(out[out.region == "0"].index)
+# out = out.drop(out[out.region == "0"].index)
 
 mask = out.region == "East of England"
 column_name = "region"
 out.loc[mask, column_name] = "South East"
+out.to_csv("output/final_data_files/regions/population.csv")
 
 # Some numerical values are -- so replace these
 age_ranges = list(chunks(list(range(15, 65)), 5))
