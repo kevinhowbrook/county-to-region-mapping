@@ -5,9 +5,5 @@ run:
 	poetry run python main.py
 
 run-all:
-	poetry run python housing_stock.py
-	poetry run python population.py
-	poetry run python marriage.py
-	poetry run python housing_multi.py
-	poetry run python local_council.py
+	poetry run python region_impute.py
 

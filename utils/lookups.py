@@ -75,7 +75,46 @@ geography = {
     ],
     "Unknown": ["Met and Shire Counties"],
 }
+# Conditional overrides for specific places
+north = [
+    "Carlisle",
+    "Eden",
+    "South Lakeland",
+    "Copeland",
+    "Allerdale",
+    "Barrow-in-Furness",
+]
 
+south_east = [
+    "Braintree",
+    "Uttleford",
+    "Tendering",
+    "Colchester",
+    "Chelmsford",
+    "Maldon",
+    "Rochford",
+    "Southend-on-Sea",
+    "Basildon",
+    "Brentwood",
+    "Castle Point",
+    "Epping Forest",
+    "Harlow",
+    "Thurrock",
+    "Dacorum",
+    "North Hertfordshire",
+    "St Albans",
+    "Welwyn Hatfield",
+    "Stevenage",
+    "East Hereforshire",
+    "Broxbourne",
+    "Watford",
+    "Three Rivers",
+    "Hertsmere",
+    "Luton",
+    "Central Bedfordshire",
+    "Milton Keynes ",
+    "Bedford",
+]
 # Shouldnt have south east or east of england
 # these should
 
@@ -150,28 +189,37 @@ def local_string_to_region(la_string, map_counties=0):
                 region_name = county_to_region(county_name)
             else:
                 region_name = i["GOR10NM"]
-            if (
-                region_name == "Yorkshire & Humberside"
-                or region_name == "Yorkshire and The Humber"
-            ):
-                region_name = "Yorkshire & Humberside"
+            if la_string in north:
+                return {
+                    "la_code": i["LAD17CD"],
+                    "la_name": la_string,
+                    "county_name": county_name,
+                    "region_name": "North",
+                }
+            if la_string in south_east:
+                return {
+                    "la_code": i["LAD17CD"],
+                    "la_name": la_string,
+                    "county_name": county_name,
+                    "region_name": "South East",
+                }
             return {
                 "la_code": i["LAD17CD"],
                 "la_name": la_string,
                 "county_name": county_name,
                 "region_name": region_name,
             }
-        if la_string == i["CTY17NM"] and map_counties == 1:
-            print("here")
-            region_name = county_to_region(la_string)
-            if (
-                region_name == "Yorkshire & Humberside"
-                or region_name == "Yorkshire and The Humber"
-            ):
-                region_name = "Yorkshire & Humberside"
-            return {
-                "la_code": i["LAD17CD"],
-                "la_name": la_string,
-                "county_name": i["CTY17NM"],
-                "region_name": region_name,
-            }
+        # if la_string == i["CTY17NM"] and map_counties == 1:
+        #     print("here")
+        #     region_name = county_to_region(la_string)
+        #     if (
+        #         region_name == "Yorkshire & Humberside"
+        #         or region_name == "Yorkshire and The Humber"
+        #     ):
+        #         region_name = "Yorkshire & Humberside"
+        #     return {
+        #         "la_code": i["LAD17CD"],
+        #         "la_name": la_string,
+        #         "county_name": i["CTY17NM"],
+        #         "region_name": region_name,
+        #     }
