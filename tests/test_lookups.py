@@ -37,9 +37,7 @@ def test_all_strings_in_test_population_age_data_return_regions():
     not_mapped = []
     for i in places:
         geo_data = lookups.local_string_to_region(i)
-        if geo_data and geo_data["region_name"] != "":
-            pass
-        else:
+        if not geo_data or geo_data["region_name"] == "":
             # print(f"Cannot find a region value for {i}")
             not_mapped.append(i)
             # row = df.loc[df["Lower and Single Tier Authority Data"] == i]

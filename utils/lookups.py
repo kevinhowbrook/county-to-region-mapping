@@ -146,14 +146,11 @@ def local_string_to_region(la_string, map_counties=0):
             # If there is no county assigned, we can't look it up in our mapping
             # So use the region name in the data, it's about 52 places that do this
             county_name = i["CTY17NM"]
-            if county_name:
-                region_name = county_to_region(county_name)
-            else:
-                region_name = i["GOR10NM"]
-            if (
-                region_name == "Yorkshire & Humberside"
-                or region_name == "Yorkshire and The Humber"
-            ):
+            region_name = county_to_region(county_name) if county_name else i["GOR10NM"]
+            if region_name in [
+                "Yorkshire & Humberside",
+                "Yorkshire and The Humber",
+            ]:
                 region_name = "Yorkshire & Humberside"
             return {
                 "la_code": i["LAD17CD"],
@@ -164,10 +161,10 @@ def local_string_to_region(la_string, map_counties=0):
         if la_string == i["CTY17NM"] and map_counties == 1:
             print("here")
             region_name = county_to_region(la_string)
-            if (
-                region_name == "Yorkshire & Humberside"
-                or region_name == "Yorkshire and The Humber"
-            ):
+            if region_name in [
+                "Yorkshire & Humberside",
+                "Yorkshire and The Humber",
+            ]:
                 region_name = "Yorkshire & Humberside"
             return {
                 "la_code": i["LAD17CD"],
